@@ -1,10 +1,14 @@
 package org.example.service;
 
-import org.example.entity.Weather;
+import org.example.entity.AirTemperature;
 import org.example.util.DatabaseConnection;
 import org.hibernate.Session;
+import org.springframework.stereotype.Service;
 
-public class WeatherService {
+import java.util.List;
+
+@Service
+public class AirTemperatureService {
 
     Session session = null;
 
@@ -13,14 +17,27 @@ public class WeatherService {
         session = DatabaseConnection.connect();
         session.beginTransaction();
 
-        Weather weather = Weather
+        AirTemperature weather = AirTemperature
                 .builder()
-                .watertemperature(20)
                 .airtemperature((int)airTemperature)
                 .build();
 
         session.save(weather);
         session.getTransaction().commit();
+        session.close();
+    }
+
+    public void readFromDB () {
+
+        session = DatabaseConnection.connect();
+        session.beginTransaction();
+
+        System.out.println(session
+                .createQuery("SELECT at.airtemperature FROM AirTemperature at", Integer.class)
+                .getResultList());
+
+        session.getTransaction().commit();
+        session.close();
     }
 
 }

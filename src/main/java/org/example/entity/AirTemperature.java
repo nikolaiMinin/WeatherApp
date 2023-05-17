@@ -4,24 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-public class Weather {
-
+public class AirTemperature {
     @Id
-    @GeneratedValue (strategy = GenerationType.AUTO)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private int id;
 
     @Column (name = "air_temperature")
     private int airtemperature;
 
-    @Column (name = "water_temperature")
-    private int watertemperature;
+    @Column (name = "time")
+    private OffsetDateTime offsetDateTime;
 }
